@@ -1,0 +1,30 @@
+{
+  "name": "js-qrcode-scaner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xubaoshi/js-qrcode-scaner.git"
+  },
+  "keywords": [
+    "js",
+    "qrcode"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xubaoshi/js-qrcode-scaner/issues"
+  },
+  "homepage": "https://github.com/xubaoshi/js-qrcode-scaner#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "consolidate": "^0.14.1",
+    "ejs": "^2.5.1",
+    "express": "^4.14.0",
+    "open": "0.0.5"
+  }
+}
