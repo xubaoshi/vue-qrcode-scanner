@@ -5,6 +5,18 @@
 	<title>Title</title>
 </head>
 <body>
-
+<div>
+	<label for="audioSource">Audio source:</label>
+	<select id="audioSource"></select>
+	<label for="vedioSource">Audio source:</label>
+	<select id="vedioSource"></select>
+	<vedio id="me"  width="160" height="120" autoPlay></vedio>
+	<vedio id="you"  width="160" height="120" autoPlay></vedio>
+</div>
 </body>
+<script>
+	var videoEle = document.querySelector('vedio#me');
+	var audioSelect = document.querySelector('select#audioSource');
+	var vedioSelect = document.querySelector('select#vedioSource');
+</script>
 </html>

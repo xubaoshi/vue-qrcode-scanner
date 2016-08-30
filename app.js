@@ -13,6 +13,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.set('views', __dirname + '/views');
 app.engine('html', require('ejs').__express);
+app.set('view engine', 'html');
 
 app.get('/', function(req, res){
 	res.render('index');
