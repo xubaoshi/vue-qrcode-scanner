@@ -16,7 +16,7 @@ app.engine('html', require('ejs').__express);
 app.set('view engine', 'html');
 
 app.get('/', function(req, res){
-	res.render('index');
+	res.render('index1');
 });
 
 app.listen(port, '', function(err){
