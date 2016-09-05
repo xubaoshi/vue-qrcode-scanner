@@ -1,0 +1,74 @@
+<!--调用手机摄像头拍照或上传图片-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+	<title>camera</title>
+	<style>
+		body, html{
+			font-family:sans-serif;
+			background-color:#000;
+		}
+		div{
+			width:80%;
+			margin:auto;
+			background-color:#fff;
+			padding:5%;
+			border:2px solid #990066;
+			text-align:center;
+			border-radius:10px;
+		}
+		canvas{
+			width:80%;
+			height:400px;
+			padding:5%;
+			border:2px solid #330000;
+			background-color:#660000;
+			border-radius:10px;
+		}
+		img{
+			width: 100%;
+			height: 400px;
+		}
+	</style>
+	<script>
+		function picChange(evt){
+			var fileInput = evt.target.files;
+			if(fileInput.length > 0){
+				var windowURL = window.URL || window.webkitURL;
+				var picURL = windowURL.createObjectURL(fileInput[0]);
+
+				var photoCanvas = document.getElementById('capturePhoto');
+				var ctx = photoCanvas.getContext('2d');
+				var photo = new Image();
+
+				photo.src = picURL;
+
+				photo.onload = function(){
+					photo.width = '300';
+					photo.height = '200';
+					ctx.drawImage(photo, 0, 0, photo.width, photo.height);
+					windowURL.revokeObjectURL(picURL);
+				}
+			}
+
+
+		}
+
+
+	</script>
+</head>
+<body>
+<div>
+	<p>
+		choose a picture from you device or caputure one with your camera now:
+	</p>
+	<input type="file" accept="image/*" onchange="picChange(event)"/>
+	<p>
+		photo:
+	</p>
+	<canvas id="capturePhoto"></canvas>
+</div>
+</body>
+</html>
