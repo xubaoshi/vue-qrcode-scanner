@@ -20,7 +20,9 @@ HTPPS是基于TLS/SSL的安全套接字上的应用协议，除了传输层进�
 1. 手机端chrome for android
 2. pc端chrome浏览器（版本较新的）
 3. USB连接线
+
 ### 步骤 ###
+
 1. 手机端开启开发者模式及USB调试模式
 2. 如果当前电脑内关于对应mobile的驱动没有安装好，进入当前链接下载对应手机的驱动  [https://developer.android.com/studio/run/oem-usb.html#Drivers](https://developer.android.com/studio/run/oem-usb.html#Drivers) 
 3. 驱动安装完毕后打开pc端浏览器输入 `chrome://inspect/#devices`  勾选 `Discover USB devices` 。正常的情况下mobile会有弹层通知确认是否启动USB手机调试，点击确认后 `chrome://inspect/#devices` 页面会显示已链接的设备及正在开启的页面。
