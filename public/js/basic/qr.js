@@ -13,6 +13,8 @@ var webkit = false;
 var moz = false;
 var v = null;
 
+window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
+
 var imghtml = '<div id="qrfile"><canvas id="out-canvas" width="320" height="240"></canvas>' +
 	'<div id="imghelp">drag and drop a QRCode here' +
 	'<br>or select a file' +
@@ -112,14 +114,7 @@ function isCanvasSupported(){
 	return !!(elem.getContext && elem.getContext('2d'));
 }
 function success(stream){
-	if(webkit)
-		v.src = window.URL.createObjectURL(stream);
-	else if(moz){
-		v.mozSrcObject = stream;
-		v.play();
-	}
-	else
-		v.src = stream;
+	v.src = window.URL.createObjectURL(stream);
 	gUM = true;
 	setTimeout(captureToCanvas, 500);
 }
@@ -134,7 +129,7 @@ function load(){
 		initCanvas(800, 600);
 		qrcode.callback = read;
 		document.getElementById("mainbody").style.display = "inline";
-		setwebcam();
+		setwebcam2();
 	}
 	else {
 		document.getElementById("mainbody").style.display = "inline";
@@ -144,48 +139,47 @@ function load(){
 	}
 }
 
-function setwebcam(){
+//function setwebcam(){
+//
+//	var options = true;
+//	if(navigator.mediaDevices && navigator.mediaDevices.enumerateDevices){
+//		var str = '';
+//		var arr = [];
+//		try{
+//			navigator.mediaDevices.enumerateDevices()
+//				.then(function(devices){
+//					devices.forEach(function(device){
+//
+//						if(device.kind === 'videoinput'){
+//							//if(device.label.toLowerCase().search("back") > -1)
+//							//	options = {'deviceId' : {'exact' : device.deviceId}, 'facingMode' : 'environment'};
+//							//str += JSON.stringify(device)+ ';';
+//							arr.push(device);
+//
+//						}
+//						console.log(device.kind + ": " + device.label + " id = " + device.deviceId);
+//
+//						console.log(device);
+//					});
+//					options = {'deviceId' : {'exact' : arr[0].deviceId}, 'facingMode' : 'environment'};
+//					//options = {'deviceId' : {'exact' : arr[1].deviceId}, 'facingMode' : 'environment'};
+//					setwebcam2(options);
+//
+//					document.getElementById("ca").innerHTML = arr[1].deviceId;
+//				});
+//		}
+//		catch (e) {
+//			console.log(e);
+//		}
+//	}
+//	else {
+//		console.log("no navigator.mediaDevices.enumerateDevices");
+//		setwebcam2(options);
+//	}
+//
+//}
 
-	var options = true;
-	if(navigator.mediaDevices && navigator.mediaDevices.enumerateDevices){
-		var str = '';
-		var arr = [];
-		try{
-			navigator.mediaDevices.enumerateDevices()
-				.then(function(devices){
-					devices.forEach(function(device){
-
-						if(device.kind === 'videoinput'){
-							//if(device.label.toLowerCase().search("back") > -1)
-							//	options = {'deviceId' : {'exact' : device.deviceId}, 'facingMode' : 'environment'};
-							//str += JSON.stringify(device)+ ';';
-							arr.push(device);
-
-						}
-						console.log(device.kind + ": " + device.label + " id = " + device.deviceId);
-
-						console.log(device);
-					});
-					options = {'deviceId' : {'exact' : arr[0].deviceId}, 'facingMode' : 'environment'};
-					//options = {'deviceId' : {'exact' : arr[1].deviceId}, 'facingMode' : 'environment'};
-					setwebcam2(options);
-
-					document.getElementById("ca").innerHTML = arr[1].deviceId;
-				});
-		}
-		catch (e) {
-			console.log(e);
-		}
-	}
-	else {
-		console.log("no navigator.mediaDevices.enumerateDevices");
-		setwebcam2(options);
-	}
-
-}
-
-function setwebcam2(options){
-	console.log(options);
+function setwebcam2(){
 	document.getElementById("result").innerHTML = "- scanning -";
 	if(stype == 1){
 		setTimeout(captureToCanvas, 500);
@@ -194,18 +188,32 @@ function setwebcam2(options){
 	var n = navigator;
 	document.getElementById("outdiv").innerHTML = vidhtml;
 	v = document.getElementById("v");
-	alert(navigator.getUserMedia);
 
-	if(n.getUserMedia)
-		n.getUserMedia({video : options, audio : false}, success, error);
-	else if(n.webkitGetUserMedia){
-		webkit = true;
-		n.webkitGetUserMedia({video : options, audio : false}, success, error);
-	}
-	else if(n.mozGetUserMedia){
-		moz = true;
-		n.mozGetUserMedia({video : options, audio : false}, success, error);
-	}
+	//if(n.getUserMedia)
+	//	n.getUserMedia({video : options, audio : false}, success, error);
+	//else if(n.webkitGetUserMedia){
+	//	webkit = true;
+	//	n.webkitGetUserMedia({video : options, audio : false}, success, error);
+	//}
+	//else if(n.mozGetUserMedia){
+	//	moz = true;
+	//	n.mozGetUserMedia({video : options, audio : false}, success, error);
+	//}
+	navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+
+	var videoSource = [];
+	navigator.mediaDevices.enumerateDevices().then((function(sourceInfos){
+		var i;
+		for(i = 0; i != sourceInfos.length; ++i){
+			var sourceInfo = sourceInfos[i];
+			if(sourceInfo.kind === 'videoinput' && sourceInfo.label.indexOf('back') != -1){
+				videoSource.push(sourceInfo.deviceId);
+			}
+		}
+		navigator.getUserMedia({video: {optional: [{sourceId: videoSource[0]}]}}, success, error);
+	}));
+
+
 
 	//document.getElementById("qrimg").src="qrimg2.png";
 	//document.getElementById("webcamimg").src="webcam.png";
