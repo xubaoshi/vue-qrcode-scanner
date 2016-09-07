@@ -24,7 +24,7 @@ app.engine('html', require('ejs').__express);
 app.set('view engine', 'html');
 
 app.get('/', function(req, res){
-	res.render('basic');
+	res.render('angular');
 });
 
 server = https.createServer(options, app).listen(port, '', function(err){
