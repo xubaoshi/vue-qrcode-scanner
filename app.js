@@ -24,11 +24,18 @@ app.engine('html', require('ejs').__express);
 app.set('view engine', 'html');
 
 app.get('/', function(req, res){
+	console.log(new Date());
 	res.render('angular');
 });
 
-server = https.createServer(options, app).listen(port, '', function(err){
+httpsSer = https.createServer(options, app).listen(port, '', function(err){
 	if(err) return;
 	console.log('Server started, listening on port:' + port)
 	open('https://localhost:' + port + '/')
+});
+
+var httpSer = http.createServer(app).listen('4001', '', function(err){
+	if(err) return;
+	console.log('Server started, listening on port:4001')
+	open('http://localhost:4001/')
 });
