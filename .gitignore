@@ -3,3 +3,5 @@
 node_modules/
 *.xml
 public/js/bundle.js
+.vscode/
+
