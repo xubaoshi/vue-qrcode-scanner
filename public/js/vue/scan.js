@@ -83,5 +83,5 @@ var QRScanner = Vue.component('qrScanner', {
 
 
 var demo = new Vue({
-    el: '#qr      '
+    el: '#qr'
 })
