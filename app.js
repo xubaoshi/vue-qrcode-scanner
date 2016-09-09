@@ -24,15 +24,14 @@ app.engine('html', require('ejs').__express);
 app.set('view engine', 'html');
 
 app.get('/', function(req, res){
-	console.log(new Date());
-	res.render('angular');
+	res.render('vue');
 });
 
-// httpsSer = https.createServer(options, app).listen(port, '', function(err){
-// 	if(err) return;
-// 	console.log('Server started, listening on port:' + port)
-// 	open('https://localhost:' + port + '/')
-// });
+httpsSer = https.createServer(options, app).listen(port, '', function(err){
+	if(err) return;
+	console.log('Server started, listening on port:' + port)
+	open('https://localhost:' + port + '/')
+});
 
 var httpSer = http.createServer(app).listen('4001', '', function(err){
 	if(err) return;
