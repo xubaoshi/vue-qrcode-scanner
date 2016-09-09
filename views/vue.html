@@ -14,7 +14,6 @@
 		.main {
 			margin: 15px auto;
 			backgroud-color: #fff;
-			overflow: auto;
 			width: 100%
 		}
 		
@@ -34,7 +33,6 @@
 		}
 		
 		#qr-canvas {
-			/*display: none;*/
 			width: 800px;
 			height: 800px;
 		}
@@ -63,15 +61,15 @@
 		</div>
 	</div>
 
-	
+
 	<script type="text/x-template" id="qr-template">
 		<video id="qr-vedio" class="v" autoplay=""></video>
-		<canvas id="qr-canvas" width="800" height="600" style="width: 800px; height: 600px;"></canvas>
+		<canvas id="qr-canvas" width="800" height="600" style="width: 800px; height: 600px;display:none;"></canvas>
 		<p v-show="result != ''">{{result}}</p>
 		<p v-show="errorMes != ''">{{errorMes}}</p>
 	</script>
-	
-	
+
+
 	<script src="/js/vue/vue.js"></script>
 	<script src="/js/jsqrcode-combined.min.js"></script>
 	<script src="/js/vue/scan.js"></script>

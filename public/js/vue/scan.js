@@ -14,6 +14,7 @@ var QRScanner = Vue.component('qrScanner', {
         }
     },
     ready() {
+        var _that = this;
         window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
         navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 
@@ -23,7 +24,6 @@ var QRScanner = Vue.component('qrScanner', {
 
         // Call the getUserMedia method with our callback functions
         if (navigator.getUserMedia) {
-            var _that = this;
             var videoSource = [];
             navigator.mediaDevices.enumerateDevices().then((function (sourceInfos) {
                 var i;
@@ -33,19 +33,21 @@ var QRScanner = Vue.component('qrScanner', {
                         videoSource.push(sourceInfo.deviceId);
                     }
                 }
-                var successCallback = function(stream){
+                var successCallback = function (stream) {
                     _that.vedio.src = (window.URL && window.URL.createObjectURL(stream)) || stream;
                     window.localMediaStream = stream;
                     _that.vedio.addEventListener("loadstart", function () {
                         _that.vedio.play();
                     }, false);
                     _that.stopScan = setInterval(_that.scan, 500);
-				}
+                }
 
-                navigator.getUserMedia({video: {
-                    optional: [{sourceId: videoSource[0]}]
-                }}, successCallback, function(e){
-                   console.log(e);
+                navigator.getUserMedia({
+                    video: {
+                        optional: [{ sourceId: videoSource[0] }]
+                    }
+                }, successCallback, function (e) {
+                    console.log(e);
                 });
             }));
 
@@ -54,13 +56,13 @@ var QRScanner = Vue.component('qrScanner', {
         }
 
         qrcode.callback = function (data) {
-            this.result = data;
-            alert('catch');
-            if (window.localMediaStream) {
+            _that.result = data;
+            console.log(data)
+            if (window.localMediaStream && window.localMediaStream.stop) {
                 window.localMediaStream.stop();
             }
-            if (this.stopScan) {
-                clearInterval(this.stopScan);
+            if (_that.stopScan) {
+                clearInterval(_that.stopScan);
             }
         };
 
@@ -68,7 +70,7 @@ var QRScanner = Vue.component('qrScanner', {
     methods: {
         scan: function () {
             if (window.localMediaStream) {
-                this.context.drawImage(this.vedio, 0, 0,100,100);
+                this.context.drawImage(this.vedio, 0, 0, 100, 100);
             }
             try {
                 qrcode.decode();
@@ -77,9 +79,9 @@ var QRScanner = Vue.component('qrScanner', {
             }
         }
     }
-})  
+})
 
 
 var demo = new Vue({
-  el: '#qr      '
+    el: '#qr      '
 })
