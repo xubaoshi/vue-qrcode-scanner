@@ -1,6 +1,9 @@
 # vue-qrcode-scanner #
 
 ## getUserMedia ##
+### getUserMedia 兼容性###
+![](http://i.imgur.com/TVSukWs.png)
+
 webapp内调用HTML5 getUserMedia API的前提是当前的网络协议为https,故需要搭建一个https的nodejs服务器。<br>
 参考链接：<br>[https://sites.google.com/a/chromium.org/dev/Home/chromium-security/deprecating-powerful-features-on-insecure-origins](https://sites.google.com/a/chromium.org/dev/Home/chromium-security/deprecating-powerful-features-on-insecure-origins)
 
