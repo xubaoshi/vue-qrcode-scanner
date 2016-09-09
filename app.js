@@ -28,11 +28,11 @@ app.get('/', function(req, res){
 	res.render('angular');
 });
 
-httpsSer = https.createServer(options, app).listen(port, '', function(err){
-	if(err) return;
-	console.log('Server started, listening on port:' + port)
-	open('https://localhost:' + port + '/')
-});
+// httpsSer = https.createServer(options, app).listen(port, '', function(err){
+// 	if(err) return;
+// 	console.log('Server started, listening on port:' + port)
+// 	open('https://localhost:' + port + '/')
+// });
 
 var httpSer = http.createServer(app).listen('4001', '', function(err){
 	if(err) return;
