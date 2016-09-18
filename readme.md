@@ -1,16 +1,19 @@
 # vue-qrcode-scanner #
 
 ## getUserMedia ##
-### getUserMedia 兼容性###
+二维码扫描需要调用手机后置摄像头，HTML5提供getUserMedia API，但兼容性不是很好。
+### 浏览器兼容性###
 ![](http://i.imgur.com/TVSukWs.png)
-
-webapp内调用HTML5 getUserMedia API的前提是当前的网络协议为https,故需要搭建一个https的nodejs服务器。<br>
+注：红色部分代表该版本浏览器不支持。<br>
+### 原生兼容性###
+对于Android 5.0，才支持getUserMedia调用后置摄像头。ios不支持(需要通过其他方式实现二维码的扫描功能)。<br>
+同时webapp内调用HTML5 getUserMedia API的前提是当前的网络协议为https,故需要搭建一个https的nodejs服务器。<br>
 参考链接：<br>[https://sites.google.com/a/chromium.org/dev/Home/chromium-security/deprecating-powerful-features-on-insecure-origins](https://sites.google.com/a/chromium.org/dev/Home/chromium-security/deprecating-powerful-features-on-insecure-origins)
 
 ## TLS、SSL、HTTPS以及证书 ##
-TLS是传输层安全协议，是一种基于网络传输的加密协议，可以在受信任的第三方公正基础上做双方的身份验证。TLS可以用在TCP上，也可以用在无连接的UDP报文上。协议规定了身份认证、算法协商、密钥交换等的实现。<br>
-SSL是TLS的前身，现在已经不更新<br>
-HTPPS是基于TLS/SSL的安全套接字上的应用协议，除了传输层进行了加密外，与其它常规HTTP协议一样基本保持一致<br>
+**TLS：**是传输层安全协议，是一种基于网络传输的加密协议，可以在受信任的第三方公正基础上做双方的身份验证。TLS可以用在TCP上，也可以用在无连接的UDP报文上。协议规定了身份认证、算法协商、密钥交换等的实现。<br>
+**SSL：**是TLS的前身，现在已经不更新。<br>
+**HTPPS:**是基于TLS/SSL的安全套接字上的应用协议，除了传输层进行了加密外，与其它常规HTTP协议一样基本保持一致<br>
 证书是TLS协议中用来对身份进行验证的机制，是一种签名形式的文件，包含证书拥有者的公钥及第三方证书的信息。证书分为两类：自签名证书和CA证书。一般自签名证书不能用来进行身份认证，如果一个server端使用自签名证书，client端要么被设置为无条件信任任何证书，要么需要将自签名证书的公钥和私钥加入受信任列表。如果这样server的私钥存在被泄露的风险。<br>
 ### TLS基于CA的身份验证基本原理 ###
 1. 首先验证方需要受信任CA提供方自己的证书（CAcert），比如证书在操作系统中的受信任列表中，或者用户通过安装根证书等方式将CA的公钥和私钥加入受信任列表；
